@@ -5,7 +5,6 @@
 // @author      carpusherw
 // @match       https://admin.hardcoretech.co/
 // @require     https://code.jquery.com/jquery-3.7.1.min.js
-// @require     https://gist.github.com/raw/2625891/waitForKeyElements.js
 // @icon        https://www.gofreight.com/wp-content/uploads/2023/10/cropped-favicon-150x150-1-32x32.png
 // @grant       none
 // ==/UserScript==
