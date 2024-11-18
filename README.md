@@ -8,5 +8,8 @@
 ## Scripts
 
 - GoFreight
-  - [Admin console helper](https://github.com/carpusherw/userscripts/raw/refs/heads/main/src/gofreight/admin-console.user.js):
-    Adds shortcuts to frequently used domains.
+  - [Admin Console helper](https://github.com/carpusherw/userscripts/raw/refs/heads/main/src/gofreight/admin-console.user.js)
+    - Remember 10 recently used domains.
+    - Add recently used domains to favorites.
+
+    ![gofreight-admin-console-example](docs/gofreight-admin-console-example.png)
