@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name        admin-console
-// @version     1.1.1
+// @version     1.2.0
 // @description GoFreight Admin Console helper
 // @author      carpusherw
 // @match       https://admin.hardcoretech.co/
@@ -13,7 +13,7 @@
 (async function() {
   'use strict';
 
-  const GM_KEY_SHORTCUTS = 'admin-console-shortcuts'
+  const GM_KEY_SHORTCUTS = 'admin-console-shortcuts';
 
   class Shortcuts {
     async load() {
@@ -61,17 +61,17 @@
     }
   }
 
-  let shortcuts = new Shortcuts();
+  const shortcuts = new Shortcuts();
   await shortcuts.load();
 
-  let domain_input = $('[name="host_domain_id"]')
-  let submit_button = $('input[type="submit"]')
+  const domain_input = $('[name="host_domain_id"]');
+  const submit_button = $('input[type="submit"]');
   submit_button.on('click', function() {
-    let domain = $('[name="host_domain_id"]').val();
+    const domain = $('[name="host_domain_id"]').val();
     shortcuts.addRecent(domain);
   });
 
-  let place_for_shortcuts = $('form').closest('div')
+  const place_for_shortcuts = $('form').closest('div');
   place_for_shortcuts.append('<h3>Favorites</h3>');
   place_for_shortcuts.append('<div id="favorites"/>');
   place_for_shortcuts.append('<h3>Recent domains</h3>');
@@ -81,8 +81,8 @@
     $('#favorites').empty();
     $('#recent-domains').empty();
     shortcuts.favorites.forEach(domain => {
-      let favorite_id = `${domain}-favorite`;
-      let remove_favorite_id = `${domain}-remove-favorite`;
+      const favorite_id = `${domain}-favorite`;
+      const remove_favorite_id = `${domain}-remove-favorite`;
       $('#favorites').append(`
         <div>
           <input type="button" id="${favorite_id}" value="${domain}"/>
@@ -100,8 +100,8 @@
     });
 
     shortcuts.recent.forEach(domain => {
-      let recent_id = `${domain}-recent`;
-      let add_favorite_id = `${domain}-add-favorite`;
+      const recent_id = `${domain}-recent`;
+      const add_favorite_id = `${domain}-add-favorite`;
       $('#recent-domains').append(`
         <div>
           <input type="button" id="${recent_id}" value="${domain}"/>
@@ -120,4 +120,13 @@
   }
 
   loadShortcuts();
+
+  // Add stage tenant info
+  const tenant_info_div = $('a[href^="/tenants"]').closest('div');
+  tenant_info_div.append('<div/>');
+  tenant_info_div.append(`
+    <a href="https://admin-stage.hardcoretech.co/tenants" target="_blank">
+      View Stage Tenant Info
+    </a>
+  `);
 })();
