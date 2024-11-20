@@ -1,23 +1,23 @@
 // ==UserScript==
 // @name        admin-console
-// @version     1.1.0
+// @version     1.1.1
 // @description GoFreight Admin Console helper
 // @author      carpusherw
 // @match       https://admin.hardcoretech.co/
 // @require     https://code.jquery.com/jquery-3.7.1.min.js
 // @icon        https://www.gofreight.com/wp-content/uploads/2023/10/cropped-favicon-150x150-1-32x32.png
-// @grant       GM_setValue
-// @grant       GM_getValue
+// @grant       GM.getValue
+// @grant       GM.setValue
 // ==/UserScript==
 
-(function() {
+(async function() {
   'use strict';
 
   const GM_KEY_SHORTCUTS = 'admin-console-shortcuts'
 
   class Shortcuts {
-    constructor() {
-      const stored = GM_getValue(GM_KEY_SHORTCUTS, null);
+    async load() {
+      const stored = await GM.getValue(GM_KEY_SHORTCUTS, null);
       if (stored) {
         const parsed = JSON.parse(stored);
         console.log('shortcuts', parsed);
@@ -54,7 +54,7 @@
     }
 
     save() {
-      GM_setValue(GM_KEY_SHORTCUTS, JSON.stringify({
+      GM.setValue(GM_KEY_SHORTCUTS, JSON.stringify({
         recent: this.recent,
         favorites: this.favorites,
       }));
@@ -62,6 +62,7 @@
   }
 
   let shortcuts = new Shortcuts();
+  await shortcuts.load();
 
   let domain_input = $('[name="host_domain_id"]')
   let submit_button = $('input[type="submit"]')
