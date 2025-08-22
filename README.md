@@ -10,6 +10,9 @@
 - Github
   - [Github Easy Approve](https://github.com/carpusherw/userscripts/raw/refs/heads/main/src/github/easy-approve.user.js)
     - Add a button to approve a pull request with a single click.
+
+    ![github-easy-approve-example](docs/github-easy-approve-example.png)
+
 - GoFreight
   - [Admin Console helper](https://github.com/carpusherw/userscripts/raw/refs/heads/main/src/gofreight/admin-console.user.js)
     - Remember 10 recently used domains.

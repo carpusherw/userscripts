@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name        GitHub Easy Approve
-// @version     1.0.0
-// @description Add an approve button next to the 'Review changes 🔽' button
+// @version     2.0.0
+// @description Add an approve button next to the 'Submit review 🔽' button
 // @author      carpusherw
 // @match       https://github.com/*
 // @require     https://code.jquery.com/jquery-3.7.1.min.js
@@ -13,34 +13,31 @@
 (function() {
   'use strict';
 
-  waitForKeyElements('button#overlay-show-review-changes-modal', (reviewButton) => {
-    const approveRadioButton = $('input[value="approve"]');
-    const submitButtons = $('button[type="submit"]');
-    let submitReviewButton;
-    submitButtons.each(function() {
-      if ($(this).text().includes('Submit review')) {
-        submitReviewButton = this;
-      }
-    });
+  // Wait for the outer 'Submit review' button
+  waitForKeyElements('button[data-size="small"]:contains("Submit review")', (reviewButton) => {
+    console.log('Easy Approve script triggered')
 
-    if (reviewButton.length && approveRadioButton.length && submitReviewButton) {
-      const easyApprove = $('<button>Easy Approve</button>');
-      easyApprove.addClass(reviewButton.attr('class'));
-      easyApprove.css('margin-left', '5px');
+    // Append Easy Approve button
+    const easyApprove = $('<button>Easy Approve</button>');
+    easyApprove
+      .attr('class', reviewButton.attr('class'))
+      .attr('data-variant', reviewButton.attr('data-variant'))
+      .attr('data-size', reviewButton.attr('data-size'));
+    easyApprove.on('click', function() {
+      // Open the dialog and wait for elements
+      reviewButton.click();
+      waitForKeyElements('input[value="approve"]', (approveRadioButton) => {
+        const submitReviewButton = $('button[data-size="medium"]:contains("Submit review")');
+        if (!submitReviewButton.length) {
+          console.error('Submit review button not found');
+          return
+        }
+        console.log('Submit review dialog opened');
 
-      easyApprove.on('click', function() {
         approveRadioButton.click();
         submitReviewButton.click();
-      });
-
-      reviewButton.parent().append(easyApprove);
-    } else {
-      if (!approveRadioButton.length) {
-        console.error('Approve radio button not found');
-      }
-      if (!submitReviewButton) {
-        console.error('Submit review button not found');
-      }
-    }
+      })
+    });
+    reviewButton.after(easyApprove);
   })
 })();
