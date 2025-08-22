@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name        GitHub Easy Approve
-// @version     2.0.0
+// @version     2.0.1
 // @description Add an approve button next to the 'Submit review 🔽' button
 // @author      carpusherw
 // @match       https://github.com/*
@@ -23,18 +23,21 @@
       .attr('class', reviewButton.attr('class'))
       .attr('data-variant', reviewButton.attr('data-variant'))
       .attr('data-size', reviewButton.attr('data-size'));
+
     easyApprove.on('click', function() {
       // Open the dialog and wait for elements
       reviewButton.click();
       waitForKeyElements('input[value="approve"]', (approveRadioButton) => {
+        console.log('Submit review dialog opened');
+
+        approveRadioButton[0].click();  // must use direct DOM click
+
+        // must query after approve button clicked
         const submitReviewButton = $('button[data-size="medium"]:contains("Submit review")');
         if (!submitReviewButton.length) {
           console.error('Submit review button not found');
           return
         }
-        console.log('Submit review dialog opened');
-
-        approveRadioButton.click();
         submitReviewButton.click();
       })
     });
